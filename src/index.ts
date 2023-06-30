@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import db from "./config/db";
+import routes from "./routes";
 
 dotenv.config();
 const app = express();
@@ -18,6 +19,8 @@ app.get("/", (req, res) => {
     success: true,
   });
 });
+
+app.use("/api", routes);
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
