@@ -32,14 +32,15 @@ const create = catchAsyncErrors(
 
     res.status(201).json({
       success: true,
-      cinema,
+      cinemaId: cinema._id,
     });
   }
 );
 
 const purchaseSeat = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
-    const { cinemaId, seatNumber } = req.body;
+    const { id: cinemaId } = req.params;
+    const { seatNumber } = req.body;
 
     if (!(seatNumber && cinemaId)) {
       return error(res, next, "Cinema Id and Seat number are required");
@@ -69,14 +70,15 @@ const purchaseSeat = catchAsyncErrors(
 
     res.status(200).json({
       success: true,
-      message: "Seat booked successfully",
+      seat,
     });
   }
 );
 
 const purchaseConsecutiveSeats = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
-    const { cinemaId, seats } = req.body;
+    const { id: cinemaId } = req.params;
+    const { seats } = req.body;
 
     if (!(seats && cinemaId)) {
       return error(res, next, "Cinema Id and no.of seats are required");
@@ -102,7 +104,6 @@ const purchaseConsecutiveSeats = catchAsyncErrors(
 
     res.status(200).json({
       success: true,
-      message: "Seats booked successfully",
       consecutiveSeats,
     });
   }
